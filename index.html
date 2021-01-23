@@ -6,52 +6,26 @@
 		<meta charset="utf-8">
 		<title>Random Generator</title>
 		<link rel="shortcut icon" href="./img/G.png"/>
-		<style>
-			body { margin: 0; background-color: grey; }
-			#greatbeast {
-				background-color: white;
-				height: 300px;
-				width: 300px;
-			}
-			
-			.sideNav {
-				height: 100%;
-				width: 0;
-				position: fixed;
-				z-index: 1;
-				top: 0;
-				right: 0;
-				background-color: green;
-				transition: 0.5s;
-			}
-			#main {
-				transition: 0.5s;
-			}
-			.greatbeast {
-				transition: 0.5s;
-			}
-		</style>
+		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<button id="openNav">Settings</button>
-		
 		<div id="main">
-			<button id="generate">Generate</button>
+			<button id="openNav" class="sidebarControl">Settings</button>
+			<h1>Random Generator</h1>
+			<button id="generate"><h2>Generate</h2></button>
 			<div id="greatbeast"><label id="rng"></div>
 		</div>
 		
-		<div id="nav" class="sideNav">
-			<button id="closeNav">Close</button>
+		<div id="nav">
+			<button id="closeNav" class="sidebarControl">Close</button>
 
 			<input type="submit" name="saveSettings" id="saveSettings" value="Save">
-			<label for="minBound">From (inclusive):</label>
+			<label for="minBound" class="numLabel"><h3>From (inclusive):</h3></label>
 			<input type="number" name="minBound" id="minBound" class="numInput" value=1>
-			<label for="maxBound">Up to (inclusive):</label>
+			<label for="maxBound" class="numLabel"><h3>Up to (inclusive):</h3></label>
 			<input type="number" name="maxBound" id="maxBound" class="numInput" value=15>
 
 		</div>
-		
-		
 	</body>
 	
 	<!--beast swapper script-->
@@ -67,12 +41,12 @@
 	let settings_valid = true;
 	let minBound = document.getElementById("minBound").value;
 	let maxBound = document.getElementById("maxBound").value;
-	document.getElementById("generate").style.backgroundColor = "green";
+	document.getElementById("generate").style.backgroundColor = "#f7f3e7";
 
 	document.getElementById("generate").onclick = function () {
 		if (settings_valid) {
 			// currently, random number is generated with 1 probability from the list of images.
-			let random = Math.floor((Math.random() * (maxBound - minBound)) + minBound); // the randomly chosen number
+			let random = Math.floor((Math.random() * (maxBound + 1 - minBound)) + minBound); // the randomly chosen number
 			
 			document.getElementById("greatbeast").style.backgroundImage = images[random % 15];
 			document.getElementById("rng").innerHTML = random;
@@ -86,10 +60,10 @@
 		maxBound = Number(document.getElementById("maxBound").value);
 		if (minBound <= maxBound) {
 			settings_valid = true;
-			document.getElementById("generate").style.backgroundColor = "green";
+			document.getElementById("generate").style.backgroundColor = "#f7f3e7";
 		} else {
 			settings_valid = false;
-			document.getElementById("generate").style.backgroundColor = "grey";
+			document.getElementById("generate").style.backgroundColor = "#aaaaaa";
 		}
 		setTimeout(() => this.value = "Save", 500) //500 millisecs
 	}
@@ -98,7 +72,7 @@
 	<script>
 	document.getElementById("openNav").onclick = function () {
 		document.getElementById("nav").style.width = "35%";
-		document.getElementById("main").style.marginRight = "65%";
+		document.getElementById("main").style.marginRight = "35%";
 	}
 	
 	document.getElementById("closeNav").onclick = function () {
