@@ -26,6 +26,9 @@
 			#main {
 				transition: 0.5s;
 			}
+			.greatbeast {
+				transition: 0.5s;
+			}
 		</style>
 	</head>
 	<body>
@@ -77,6 +80,7 @@
 	
 	// settings processing
 	document.getElementById("saveSettings").onclick = function () {
+		this.value = "Saving...";
 		minBound = Number(document.getElementById("minBound").value);
 		maxBound = Number(document.getElementById("maxBound").value);
 		if (minBound <= maxBound) {
@@ -86,6 +90,7 @@
 			settings_valid = false;
 			document.getElementById("generate").style.backgroundColor = "grey";
 		}
+		setTimeout(() => this.value = "Save", 500) //500 millisecs
 	}
 	</script>
 	<!-- sidebar scripts-->
