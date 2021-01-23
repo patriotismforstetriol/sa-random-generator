@@ -36,11 +36,15 @@
 			<div id="greatbeast"><label id="rng"></div>
 		</div>
 		
-		<div id="settings" class="sideNav">
+		<div id="nav" class="sideNav">
 			<button id="closeNav">Close</button>
-			Settings
-			Go
-			Here
+
+			<input type="submit" name="saveSettings" id="saveSettings" value="Save">
+			<label for="minBound">From (inclusive):</label>
+			<input type="number" name="minBound" id="minBound" class="numInput" value=1>
+			<label for="maxBound">Up to (inclusive):</label>
+			<input type="number" name="maxBound" id="maxBound" class="numInput" value=15>
+
 		</div>
 		
 		
@@ -56,26 +60,44 @@
 					"url('./img/great-beasts-ninani.png')", "url('./img/great-beasts-rumfuss.png')",
 					"url('./img/great-beasts-suka.png')", "url('./img/great-beasts-tellun.png')",
 					"url('./img/great-beasts-uraza.png')"];
+	let settings_valid = true;
+	let minBound = document.getElementById("minBound").value;
+	let maxBound = document.getElementById("maxBound").value;
+	document.getElementById("generate").style.backgroundColor = "green";
 
 	document.getElementById("generate").onclick = function () {
-		// currently, random number is generated with 1 probability from the list of images.
-		let random = Math.floor((Math.random() * images.length)); // the randomly chosen number
-		
-		document.getElementById("greatbeast").style.backgroundImage = images[random];
-		document.getElementById("rng").innerHTML = random;
+		if (settings_valid) {
+			// currently, random number is generated with 1 probability from the list of images.
+			let random = Math.floor((Math.random() * (maxBound - minBound)) + minBound); // the randomly chosen number
+			
+			document.getElementById("greatbeast").style.backgroundImage = images[random % 15];
+			document.getElementById("rng").innerHTML = random;
+		}
+	}
+	
+	// settings processing
+	document.getElementById("saveSettings").onclick = function () {
+		minBound = Number(document.getElementById("minBound").value);
+		maxBound = Number(document.getElementById("maxBound").value);
+		if (minBound <= maxBound) {
+			settings_valid = true;
+			document.getElementById("generate").style.backgroundColor = "green";
+		} else {
+			settings_valid = false;
+			document.getElementById("generate").style.backgroundColor = "grey";
+		}
 	}
 	</script>
 	<!-- sidebar scripts-->
 	<script>
-		document.getElementById("openNav").onclick = function () {
-			document.getElementById("settings").style.width = "35%";
-			document.getElementById("main").style.marginRight = "65%";
-		}
-		
-		document.getElementById("closeNav").onclick = function () {
-			document.getElementById("settings").style.width = "0px";
-			document.getElementById("main").style.marginRight = "0px";
-		}
-	</script>
+	document.getElementById("openNav").onclick = function () {
+		document.getElementById("nav").style.width = "35%";
+		document.getElementById("main").style.marginRight = "65%";
+	}
 	
+	document.getElementById("closeNav").onclick = function () {
+		document.getElementById("nav").style.width = "0px";
+		document.getElementById("main").style.marginRight = "0px";
+	}
+	</script>
 </html>
