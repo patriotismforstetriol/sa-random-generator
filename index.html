@@ -29,7 +29,7 @@
 	</body>
 	
 	<!--beast swapper script-->
-	<script>
+	<script>	
     const images = ["url('./img/great-beasts-arax.png')", "url('./img/great-beasts-briggan.png')",
 					"url('./img/great-beasts-cabaro.png')", "url('./img/great-beasts-dinesh.png')",
 					"url('./img/great-beasts-essix.png')", "url('./img/great-beasts-gerathon.png')",
@@ -39,9 +39,23 @@
 					"url('./img/great-beasts-suka.png')", "url('./img/great-beasts-tellun.png')",
 					"url('./img/great-beasts-uraza.png')"];
 	let settings_valid = true;
-	let minBound = document.getElementById("minBound").value;
-	let maxBound = document.getElementById("maxBound").value;
-	document.getElementById("generate").style.backgroundColor = "#f7f3e7";
+	let minBound = Number(document.getElementById("minBound").value);
+	let maxBound = Number(document.getElementById("maxBound").value);
+	
+	function updateLabel() {
+		const label = document.getElementById('generate');
+        label.innerHTML = '<h2>Generate</h2>(in range ' + minBound + '&#8211;' + maxBound + ')';
+	}
+	
+	// Preliminary set
+	if (minBound <= maxBound) {
+		settings_valid = true;
+		document.getElementById("generate").style.backgroundColor = "#f7f3e7";
+	} else {
+		settings_valid = false;
+		document.getElementById("generate").style.backgroundColor = "#aaaaaa";
+	}
+	updateLabel();
 
 	document.getElementById("generate").onclick = function () {
 		if (settings_valid) {
@@ -65,6 +79,7 @@
 			settings_valid = false;
 			document.getElementById("generate").style.backgroundColor = "#aaaaaa";
 		}
+		updateLabel();
 		setTimeout(() => this.value = "Save", 500) //500 millisecs
 	}
 	</script>
